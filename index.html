@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta
+    name="description"
+    content="ServaCibum connects local food donors, charities, and volunteers in Sugar Land, Texas to coordinate safe community food rescue and delivery."
+  >
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://servacibum.org/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ServaCibum">
+  <meta property="og:title" content="ServaCibum | Community Food Rescue in Sugar Land, Texas">
+  <meta
+    property="og:description"
+    content="ServaCibum connects local food donors, charities, and volunteers in Sugar Land, Texas to coordinate safe community food rescue and delivery."
+  >
+  <meta property="og:url" content="https://servacibum.org/">
+  <meta property="og:image" content="https://servacibum.org/assets/servacibum-hero.png">
+  <meta property="og:image:alt" content="ServaCibum community food rescue">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ServaCibum | Community Food Rescue in Sugar Land, Texas">
+  <meta
+    name="twitter:description"
+    content="ServaCibum connects local food donors, charities, and volunteers in Sugar Land, Texas to coordinate safe community food rescue and delivery."
+  >
+  <meta name="twitter:image" content="https://servacibum.org/assets/servacibum-hero.png">
+
+  <meta
+    http-equiv="Cache-Control"
+    content="no-cache, no-store, must-revalidate"
+  >
+
+  <meta
+    http-equiv="Pragma"
+    content="no-cache"
+  >
+
+  <meta
+    http-equiv="Expires"
+    content="0"
+  >
+
+  <meta name="theme-color" content="#123f2b">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ServaCibum">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <title>ServaCibum | Community Food Rescue in Sugar Land, Texas</title>
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="manifest" href="/manifest.webmanifest?v=20261003b">
+  <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png?v=20261003b">
+
+  <link
+    rel="stylesheet"
+    href="./assets/site.css?v=20260930-mobile-grid1"
+  >
+
+
+  <style>
+    /* Public header install action */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .install-app-button {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 10px 15px;
+      border: 0;
+      border-radius: 9px;
+      background: #123f2b;
+      color: #fff;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .install-app-button.show {
+      display: inline-flex;
+    }
+
+    .install-app-button:hover {
+      background: #0d3423;
+    }
+
+    .install-label-short {
+      display: none;
+    }
+
+    /* Keep the header's third column wide enough for both actions. */
+    @media (min-width: 721px) {
+      .topbar {
+        grid-template-columns: 260px 1fr auto !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .header-actions {
+        gap: 6px;
+      }
+
+      .header-actions > a {
+        padding: 9px 10px !important;
+        font-size: 10px !important;
+      }
+
+      .install-app-button {
+        min-height: 35px;
+        padding: 9px 10px;
+        font-size: 10px;
+      }
+
+      .install-label-full {
+        display: none;
+      }
+
+      .install-label-short {
+        display: inline;
+      }
+    }
+
+    /* Install guidance dialog for iPhone/iPad and browser fallback cases. */
+    #installGuide {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      z-index: 9999;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 16px;
+      border: 1px solid rgba(18, 63, 43, 0.14);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 18px 45px rgba(18, 63, 43, 0.22);
+      color: #173528;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: none;
+    }
+
+    #installGuide.show {
+      display: block;
+    }
+
+    .install-guide-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .install-guide-mark {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #eaf6ee;
+      color: #123f2b;
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .install-guide-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .install-guide-copy strong {
+      display: block;
+      margin: 0 28px 4px 0;
+      font-size: 16px;
+      line-height: 1.25;
+      color: #123f2b;
+    }
+
+    .install-guide-copy p {
+      margin: 0;
+      color: #596a61;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .install-guide-steps {
+      margin: 12px 0 0;
+      padding: 11px 12px;
+      border-radius: 12px;
+      background: #f3f8f5;
+      color: #334c40;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .install-guide-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: #64736b;
+      font-size: 21px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .install-guide-close:hover {
+      background: #eef4f0;
+    }
+
+    .install-guide-done {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 11px;
+      background: #158447;
+      color: #fff;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    @media (min-width: 700px) {
+      #installGuide {
+        left: auto;
+        right: 22px;
+        bottom: 22px;
+        width: 420px;
+        margin: 0;
+      }
+    }
+
+    /* Homepage mobile navigation: approved 3 x 2 grid */
+    @media (max-width: 700px) {
+      .sidebar {
+        position: static !important;
+        top: auto !important;
+        padding: 7px 8px !important;
+        overflow-x: visible !important;
+      }
+
+      .sidebar-nav {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        gap: 6px !important;
+      }
+
+      .sidebar-nav button,
+      .sidebar-nav a {
+        width: 100% !important;
+        min-width: 0 !important;
+        min-height: 42px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 6px !important;
+        white-space: normal !important;
+        text-align: center !important;
+      }
+
+      /* Keep the existing 3 x 2 layout intact, then give legal links their own rows. */
+      .sidebar-nav [data-terms-link="side"],
+      .sidebar-nav [data-privacy-link="side"] {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div id="app"></div>
+
+  <aside
+    id="installGuide"
+    role="dialog"
+    aria-label="Install ServaCibum"
+    aria-live="polite"
+  >
+    <button
+      class="install-guide-close"
+      id="installGuideClose"
+      type="button"
+      aria-label="Dismiss install instructions"
+    >&times;</button>
+
+    <div class="install-guide-top">
+      <div class="install-guide-mark" aria-hidden="true">SC</div>
+
+      <div class="install-guide-copy">
+        <strong id="installGuideTitle">Install ServaCibum</strong>
+        <p id="installGuideIntro">
+          Add ServaCibum to your device so it opens like an app.
+        </p>
+      </div>
+    </div>
+
+    <div class="install-guide-steps" id="installGuideSteps"></div>
+
+    <button
+      class="install-guide-done"
+      id="installGuideDone"
+      type="button"
+    >Got it</button>
+  </aside>
+
+<script
+    src="./app/main.js?v=20260930-remove-banner1"
+    defer
+  ></script>
+<script>
+    (function () {
+      "use strict";
+
+      if (!("serviceWorker" in navigator)) {
+        return;
+      }
+
+      window.addEventListener("load", async function () {
+        try {
+          /* Remove the old Volunteer-only worker so it cannot override
+             the new site-wide worker inside /volunteer/. */
+          const registrations =
+            await navigator.serviceWorker.getRegistrations();
+
+          for (const registration of registrations) {
+            const scope = String(registration.scope || "");
+            const scriptURL = String(
+              (registration.active && registration.active.scriptURL) ||
+              (registration.waiting && registration.waiting.scriptURL) ||
+              (registration.installing && registration.installing.scriptURL) ||
+              ""
+            );
+
+            if (
+              scope.includes("/volunteer/") ||
+              scriptURL.includes("/volunteer/sw.js")
+            ) {
+              await registration.unregister();
+            }
+          }
+
+          if ("caches" in window) {
+            const keys = await caches.keys();
+            await Promise.all(
+              keys
+                .filter(key => key.startsWith("servacibum-volunteer-"))
+                .map(key => caches.delete(key))
+            );
+          }
+
+          const registration =
+            await navigator.serviceWorker.register("/sw.js", {
+              scope: "/",
+              updateViaCache: "none"
+            });
+
+          registration.update().catch(function () {});
+        } catch (error) {
+          console.warn("ServaCibum PWA setup could not complete:", error);
+        }
+      });
+    })();
+  </script>
+  <script>
+    (function () {
+      "use strict";
+
+      let deferredInstallPrompt = null;
+      let installButton = null;
+
+      const ua = navigator.userAgent || "";
+
+      const isIOS =
+        /iPad|iPhone|iPod/i.test(ua) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+      const isAndroid = /Android/i.test(ua);
+
+      const isSafari =
+        /Safari/i.test(ua) &&
+        !/(CriOS|FxiOS|EdgiOS|OPiOS)/i.test(ua);
+
+      function isStandalone() {
+        return (
+          window.matchMedia("(display-mode: standalone)").matches ||
+          window.navigator.standalone === true
+        );
+      }
+
+      function guideElements() {
+        return {
+          guide: document.getElementById("installGuide"),
+          title: document.getElementById("installGuideTitle"),
+          intro: document.getElementById("installGuideIntro"),
+          steps: document.getElementById("installGuideSteps"),
+          close: document.getElementById("installGuideClose"),
+          done: document.getElementById("installGuideDone")
+        };
+      }
+
+      function hideGuide() {
+        const elements = guideElements();
+        if (elements.guide) {
+          elements.guide.classList.remove("show");
+        }
+      }
+
+      function showGuide(kind) {
+        const elements = guideElements();
+
+        if (
+          !elements.guide ||
+          !elements.title ||
+          !elements.intro ||
+          !elements.steps
+        ) {
+          return;
+        }
+
+        if (kind === "ios") {
+          elements.title.textContent = "Install ServaCibum on your iPhone";
+
+          if (isSafari) {
+            elements.intro.textContent =
+              "Add ServaCibum to your Home Screen so it opens like an app.";
+
+            elements.steps.innerHTML =
+              "In Safari: tap <strong>Share</strong>, choose " +
+              "<strong>Add to Home Screen</strong>, turn on " +
+              "<strong>Open as Web App</strong>, then tap <strong>Add</strong>.";
+          } else {
+            elements.intro.textContent =
+              "Open ServaCibum in Safari first, then add it to your Home Screen.";
+
+            elements.steps.innerHTML =
+              "Open this page in <strong>Safari</strong>. Then tap " +
+              "<strong>Share</strong> → <strong>Add to Home Screen</strong> → " +
+              "<strong>Add</strong>.";
+          }
+        } else if (kind === "android") {
+          elements.title.textContent = "Install ServaCibum";
+
+          elements.intro.textContent =
+            "Your browser did not open the install prompt automatically.";
+
+          elements.steps.innerHTML =
+            "In Chrome, tap the <strong>three-dot menu</strong>, then choose " +
+            "<strong>Install app</strong> or <strong>Add to Home screen</strong>.";
+        } else {
+          elements.title.textContent = "Install ServaCibum";
+
+          elements.intro.textContent =
+            "Use your browser's install option to add ServaCibum as an app.";
+
+          elements.steps.innerHTML =
+            "Look for <strong>Install</strong> in your browser menu or address bar.";
+        }
+
+        elements.guide.classList.add("show");
+      }
+
+      function updateInstallButton() {
+        if (!installButton) {
+          return;
+        }
+
+        if (isStandalone()) {
+          installButton.classList.remove("show");
+          return;
+        }
+
+        const shouldShow =
+          isIOS ||
+          isAndroid ||
+          deferredInstallPrompt !== null;
+
+        installButton.classList.toggle("show", shouldShow);
+      }
+
+      async function handleInstallClick() {
+        if (isStandalone()) {
+          updateInstallButton();
+          return;
+        }
+
+        if (deferredInstallPrompt) {
+          const promptEvent = deferredInstallPrompt;
+          deferredInstallPrompt = null;
+
+          try {
+            await promptEvent.prompt();
+            const choice = await promptEvent.userChoice;
+
+            if (choice && choice.outcome === "accepted") {
+              installButton.classList.remove("show");
+            } else {
+              updateInstallButton();
+            }
+          } catch (error) {
+            if (isIOS) {
+              showGuide("ios");
+            } else if (isAndroid) {
+              showGuide("android");
+            } else {
+              showGuide("other");
+            }
+          }
+
+          return;
+        }
+
+        if (isIOS) {
+          showGuide("ios");
+          return;
+        }
+
+        if (isAndroid) {
+          showGuide("android");
+          return;
+        }
+
+        showGuide("other");
+      }
+
+      function addInstallButton() {
+        if (isStandalone()) {
+          return false;
+        }
+
+        /*
+         * main.js renders the public header more than once while live data loads.
+         * If a previous install button belonged to an old header that has since
+         * been replaced, forget that detached element and create a fresh one.
+         */
+        if (installButton && !installButton.isConnected) {
+          installButton = null;
+        }
+
+        if (installButton && installButton.isConnected) {
+          updateInstallButton();
+          return true;
+        }
+
+        const topbar = document.querySelector(".topbar");
+        const getInvolved =
+          topbar &&
+          topbar.querySelector('a[href="./get-involved.php"]');
+
+        if (!topbar || !getInvolved) {
+          return false;
+        }
+
+        let actions = topbar.querySelector(".header-actions");
+
+        if (!actions) {
+          actions = document.createElement("div");
+          actions.className = "header-actions";
+          getInvolved.parentNode.insertBefore(actions, getInvolved);
+          actions.appendChild(getInvolved);
+        }
+
+        installButton = document.createElement("button");
+        installButton.type = "button";
+        installButton.id = "installServaCibum";
+        installButton.className = "install-app-button";
+        installButton.setAttribute("aria-label", "Install ServaCibum");
+        installButton.innerHTML =
+          '<span class="install-label-full">Install ServaCibum</span>' +
+          '<span class="install-label-short">Install App</span>';
+
+        installButton.addEventListener("click", handleInstallClick);
+
+        actions.insertBefore(installButton, getInvolved);
+        updateInstallButton();
+
+        return true;
+      }
+
+      window.addEventListener("beforeinstallprompt", function (event) {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        addInstallButton();
+        updateInstallButton();
+      });
+
+      window.addEventListener("appinstalled", function () {
+        deferredInstallPrompt = null;
+        hideGuide();
+
+        if (installButton) {
+          installButton.classList.remove("show");
+        }
+      });
+
+      window.addEventListener("DOMContentLoaded", function () {
+        const elements = guideElements();
+
+        if (elements.close) {
+          elements.close.addEventListener("click", hideGuide);
+        }
+
+        if (elements.done) {
+          elements.done.addEventListener("click", hideGuide);
+        }
+
+        /*
+         * Add immediately if the header is already present, then keep watching
+         * #app because main.js replaces the header after its live-data request.
+         */
+        addInstallButton();
+
+        const appRoot = document.getElementById("app");
+
+        if (appRoot) {
+          const observer = new MutationObserver(function () {
+            addInstallButton();
+          });
+
+          observer.observe(appRoot, {
+            childList: true,
+            subtree: true
+          });
+        }
+
+        setTimeout(addInstallButton, 250);
+        setTimeout(addInstallButton, 750);
+        setTimeout(addInstallButton, 1500);
+        setTimeout(addInstallButton, 3000);
+      });
+    })();
+  </script>
+
+
+  <script>
+    (function () {
+      "use strict";
+
+      function addPublicPageLinks() {
+        const topnav = document.querySelector(".topnav");
+
+        if (topnav && !topnav.querySelector("[data-about-us-link]")) {
+          const topAboutButton = document.createElement("button");
+          topAboutButton.type = "button";
+          topAboutButton.className = "nav-button";
+          topAboutButton.textContent = "About Us";
+          topAboutButton.setAttribute("data-about-us-link", "top");
+          topAboutButton.addEventListener("click", function () {
+            window.location.href = "./about-us.php";
+          });
+          topnav.appendChild(topAboutButton);
+        }
+
+        if (topnav && !topnav.querySelector("[data-terms-link]")) {
+          const topTermsButton = document.createElement("button");
+          topTermsButton.type = "button";
+          topTermsButton.className = "nav-button";
+          topTermsButton.textContent = "Terms of Use";
+          topTermsButton.setAttribute("data-terms-link", "top");
+          topTermsButton.addEventListener("click", function () {
+            window.location.href = "./terms-of-use.php";
+          });
+          topnav.appendChild(topTermsButton);
+        }
+
+        if (topnav && !topnav.querySelector("[data-privacy-link]")) {
+          const topPrivacyButton = document.createElement("button");
+          topPrivacyButton.type = "button";
+          topPrivacyButton.className = "nav-button";
+          topPrivacyButton.textContent = "Privacy";
+          topPrivacyButton.setAttribute("data-privacy-link", "top");
+          topPrivacyButton.addEventListener("click", function () {
+            window.location.href = "./privacy.php";
+          });
+          topnav.appendChild(topPrivacyButton);
+        }
+
+        const sidebarNav = document.querySelector(".sidebar-nav");
+
+        if (
+          sidebarNav &&
+          !sidebarNav.querySelector("[data-about-us-link]")
+        ) {
+          const sideAboutButton = document.createElement("button");
+          sideAboutButton.type = "button";
+          sideAboutButton.textContent = "About Us";
+          sideAboutButton.setAttribute("data-about-us-link", "side");
+          sideAboutButton.addEventListener("click", function () {
+            window.location.href = "./about-us.php";
+          });
+          sidebarNav.appendChild(sideAboutButton);
+        }
+
+        if (
+          sidebarNav &&
+          !sidebarNav.querySelector("[data-terms-link]")
+        ) {
+          const sideTermsButton = document.createElement("button");
+          sideTermsButton.type = "button";
+          sideTermsButton.textContent = "Terms of Use";
+          sideTermsButton.setAttribute("data-terms-link", "side");
+          sideTermsButton.addEventListener("click", function () {
+            window.location.href = "./terms-of-use.php";
+          });
+          sidebarNav.appendChild(sideTermsButton);
+        }
+
+        if (
+          sidebarNav &&
+          !sidebarNav.querySelector("[data-privacy-link]")
+        ) {
+          const sidePrivacyButton = document.createElement("button");
+          sidePrivacyButton.type = "button";
+          sidePrivacyButton.textContent = "Privacy";
+          sidePrivacyButton.setAttribute("data-privacy-link", "side");
+          sidePrivacyButton.addEventListener("click", function () {
+            window.location.href = "./privacy.php";
+          });
+          sidebarNav.appendChild(sidePrivacyButton);
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        addPublicPageLinks();
+
+        const appRoot = document.getElementById("app");
+
+        if (appRoot) {
+          const observer = new MutationObserver(function () {
+            addPublicPageLinks();
+          });
+
+          observer.observe(appRoot, {
+            childList: true,
+            subtree: true
+          });
+        }
+
+        setTimeout(addPublicPageLinks, 250);
+        setTimeout(addPublicPageLinks, 750);
+        setTimeout(addPublicPageLinks, 1500);
+        setTimeout(addPublicPageLinks, 3000);
+      });
+    })();
+  </script>
+
+</body>
+</html>
