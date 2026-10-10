@@ -5,7 +5,7 @@
 <h1 align="center">ServaCibum</h1>
 
 <p align="center">
-  <strong>A student-built food-rescue platform that moves surplus food from donors to charities, with every step verified and traceable.</strong>
+  <strong>A student-built food-rescue platform that takes eligible surplus food from donation to pickup, delivery, and confirmed receipt—with every step traceable and sensitive pickup details protected.</strong>
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <img alt="Status" src="https://img.shields.io/badge/status-controlled%20pilot-orange">
+  <img alt="Status" src="https://img.shields.io/badge/status-preparing%20for%20community%20pilot-orange">
   <img alt="PHP" src="https://img.shields.io/badge/backend-PHP-777BB4">
   <img alt="MySQL" src="https://img.shields.io/badge/database-MySQL-4479A1">
   <img alt="PWA" src="https://img.shields.io/badge/app-PWA-5A0FC8">
@@ -28,9 +28,10 @@
 
 ## Table of Contents
 
-- [Overview](#overview)
+- [Why ServaCibum](#why-servacibum)
 - [How It Works](#how-it-works)
-- [Key Features](#key-features)
+- [Design Principles](#design-principles)
+- [Engineering Highlights](#engineering-highlights)
 - [Privacy and Security](#privacy-and-security)
 - [Technology Stack](#technology-stack)
 - [My Role](#my-role)
@@ -41,17 +42,15 @@
 
 ---
 
-## Overview
+## Why ServaCibum
 
-Small-scale food rescue often runs on scattered texts, calls, and spreadsheets. That makes it hard to coordinate pickups, protect donors' addresses, or prove that food reached the right place.
+The USDA estimates that [between 30 and 40 percent of the U.S. food supply is wasted](https://www.usda.gov/about-food/food-safety/food-loss-and-waste/food-waste-faqs), while some surplus food remains [safe and wholesome enough to help feed people in need](https://www.usda.gov/about-food/food-safety/food-loss-and-waste/why-should-we-care-about-food-waste).
 
-ServaCibum replaces that with one structured workflow. Donors, approved charities, volunteers, and administrators each get a dedicated experience, and every donation is tracked from posting through pickup, delivery, and confirmed receipt.
+Small-scale food rescue can be difficult to coordinate. Someone has to connect a donor with a charity, arrange a pickup, protect sensitive contact and location information, coordinate transportation, and confirm that the food actually reached its recipient.
 
-**Design goals**
+ServaCibum brings donors, charities, volunteers, and administrators into one structured workflow instead of relying on disconnected messages, calls, and spreadsheets.
 
-- **Coordination:** one shared workflow instead of disconnected messages.
-- **Privacy:** pickup addresses and contact details are revealed only after an approved match.
-- **Traceability:** every handoff is verified and recorded.
+*The name comes from Latin: **serva cibum**, “save the food.”*
 
 ---
 
@@ -59,44 +58,70 @@ ServaCibum replaces that with one structured workflow. Donors, approved charitie
 
 ```mermaid
 flowchart LR
-    A[Donor posts surplus food] --> B[Charity requests it]
-    B --> C{Admin reviews and approves match}
-    C --> D[Volunteer assigned]
-    C --> E[Charity self-pickup]
-    D --> F[Pickup verified at handoff]
-    E --> F
-    F --> G[Charity confirms receipt]
+    A[Donor posts eligible surplus food] --> B[Charity requests food]
+    B --> C{Administrator reviews request}
+    C -->|Approved match| D{Delivery method}
+    D -->|Volunteer| E[Approved volunteer assigned or self-claims]
+    D -->|Self-pickup| F[Charity uses approved self-pickup flow]
+    E --> G[Pickup verified at physical handoff]
+    F --> G
+    G --> H[Charity confirms delivery and receipt]
 ```
 
 1. **Post:** a donor lists eligible surplus food.
 2. **Request:** a charity requests available food.
 3. **Approve:** an administrator reviews the request and approves a match.
-4. **Assign:** an approved volunteer is assigned, or the charity uses the approved self-pickup flow.
+4. **Assign:** an approved volunteer is assigned or self-claims the delivery, or the charity uses an approved self-pickup flow.
 5. **Verify:** pickup is confirmed at the physical handoff.
 6. **Confirm:** the receiving charity confirms delivery and receipt.
 
+The production platform provides a dedicated experience for each role:
+
+| Role | What they do |
+|---|---|
+| **Donor** | Posts eligible surplus food |
+| **Charity** | Requests available food, may use an approved self-pickup flow, and confirms receipt |
+| **Volunteer** | Once approved, can be assigned to or self-claim eligible deliveries |
+| **Administrator** | Reviews applications and requests, approves matches, and coordinates deliveries |
+
 ---
 
-## Key Features
+## Design Principles
 
-**Workflow and roles**
+- **Privacy by default.** Sensitive pickup addresses and contact details are not exposed before an approved match or assignment.
+- **Approved matches.** An administrator reviews each request before food is matched.
+- **Verified handoff.** One-time pickup verification confirms the physical transfer of food.
+- **Controlled access.** Operational actions are restricted according to user role and approval status.
+- **Traceable end to end.** Delivery state is recorded from posting through pickup and recipient confirmation.
 
-- Separate role-based experiences for donors, charities, volunteers, and administrators
-- Donation and request matching with admin approval
-- Volunteer assignment and self-claim workflows
-- Delivery-state tracking with recipient confirmation
+---
 
-**Trust and safety**
+## Engineering Highlights
 
-- One-time pickup verification at the physical handoff
+### Workflow
+
+- Role-based donor, charity, volunteer, and administrator experiences
+- Donation and food-request matching with administrator approval
+- Volunteer assignment, direct-offer, and self-claim workflows
+- Charity self-pickup support
+- Delivery-state tracking from assignment through confirmed receipt
+- Delivery history and operational audit records
+
+### Trust, Privacy, and Security
+
 - Privacy-aware handling of pickup addresses and contact information
+- One-time pickup verification at physical handoff
+- Server-side authorization and eligibility checks for protected actions
+- Driver-verification controls for approved volunteer transportation
 - CSRF protection, prepared database queries, password hashing, and login-rate controls
+- Public-facing content separated from private operational and administrative code
 
-**Platform**
+### Platform and Reliability
 
-- Progressive Web App (PWA) with offline fallback
+- Progressive Web App (PWA) support
+- Offline fallback for appropriate public content
 - Network-only handling for authenticated and live workflow pages
-- Public content kept separate from private operational and administrative code
+- Production secrets kept outside the public repository
 
 ---
 
@@ -104,12 +129,14 @@ flowchart LR
 
 ServaCibum is built around controlled access to sensitive operational information.
 
-- Pickup addresses and contact details are not exposed publicly before an approved match or assignment.
-- Authenticated workflows and form submissions are protected with CSRF tokens, prepared statements, hashed passwords, and rate-limited logins.
-- Live and authenticated pages are never served from the service-worker cache.
-- Production secrets are kept outside this public repository.
+- Pickup addresses and related contact details are not exposed publicly before an approved match or assignment.
+- Authenticated actions use server-side authorization rather than relying only on interface controls.
+- Driver eligibility is verified before users can access volunteer delivery functions requiring an approved driver.
+- Authenticated workflows and form submissions use protections including CSRF tokens, prepared database queries, hashed passwords, and login-rate controls.
+- Live and authenticated pages are kept out of the service-worker cache.
+- Production credentials, participant data, private uploads, and administrative source are excluded from this public repository.
 
-See [Security and Privacy Notes](docs/SECURITY.md) for details.
+See [Security and Privacy Notes](docs/SECURITY.md) for additional information.
 
 ---
 
@@ -119,7 +146,7 @@ See [Security and Privacy Notes](docs/SECURITY.md) for details.
 |---|---|
 | Front end | HTML, CSS, JavaScript |
 | Back end | PHP |
-| Database | MySQL (PDO) |
+| Database | MySQL / PDO |
 | Data format | JSON |
 | App experience | Progressive Web App (service worker, web manifest) |
 | Version control | Git and GitHub |
@@ -128,29 +155,37 @@ See [Security and Privacy Notes](docs/SECURITY.md) for details.
 
 ## My Role
 
-**Mohid Latif, Founder & Developer**
+**Mohid Latif — Founder & Developer**
 
-I founded ServaCibum and designed and developed its core workflow, public website, and role-based donor, charity, volunteer, and administrative experiences. My work includes:
+I founded ServaCibum and designed and developed its core workflow, public website, and role-based donor, charity, volunteer, and administrative experiences.
+
+My work includes:
 
 - Designing the end-to-end donation, request, matching, pickup, delivery, and confirmation workflow
-- Building the four role-based experiences
-- Developing the matching, volunteer-assignment, pickup-verification, and delivery-tracking logic
-- Designing privacy controls so sensitive pickup information is exposed only when appropriate
-- Implementing security controls for authenticated workflows and form submissions
+- Building the donor, charity, volunteer, and administrator experiences
+- Developing donation/request matching and volunteer-assignment logic
+- Building self-claim, direct-offer, pickup-verification, and delivery-tracking workflows
+- Designing privacy controls that keep sensitive pickup information hidden until it is appropriate to share
+- Engineering volunteer driver-eligibility and verification controls
+- Implementing security protections around authenticated workflows and form submissions
 - Developing and maintaining the public website and PWA behavior
-- Testing and refining the platform for a controlled community pilot
+- Conducting end-to-end workflow and regression testing in preparation for a controlled community pilot
 
 ---
 
 ## Project Status
 
-ServaCibum is being prepared and tested for a **controlled community pilot**. The current focus is validating the workflow, privacy protections, pickup verification, and delivery process before broader use.
+ServaCibum is being prepared and tested for a **controlled community pilot**.
+
+The current focus is validating the platform with real-world operating procedures while maintaining administrator oversight, privacy protections, driver verification, secure pickup handoff, and end-to-end delivery confirmation before broader community use.
 
 ---
 
 ## About This Repository
 
-This is a **portfolio-safe public snapshot**, not a deployable copy of the production system. It shows the public website, architecture, selected application code, and engineering decisions without exposing credentials or participant data.
+This repository is a **portfolio-safe public snapshot** of ServaCibum, not a deployable copy of the full production system.
+
+It is intended to demonstrate the project's public interface, architecture, selected application code, engineering decisions, and documentation without exposing production credentials, private participant data, or sensitive operational source.
 
 | Included | Intentionally excluded |
 |---|---|
@@ -188,5 +223,5 @@ offline.html          Offline fallback
 
 ## Contact
 
-**ServaCibum** · Sugar Land, Texas
+**ServaCibum** · Sugar Land, Texas  
 Website: [servacibum.org](https://servacibum.org)
