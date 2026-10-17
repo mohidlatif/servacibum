@@ -1,27 +1,10 @@
 <?php
-// Only allow browser cross-origin access from approved ServaCibum domains.
-// This is not authentication; protected endpoints must enforce authorization.
-$allowedOrigins = [
-    'https://servacibum.org',
-    'https://www.servacibum.org',
-];
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-if (in_array($origin, $allowedOrigins, true)) {
-    header('Access-Control-Allow-Origin: ' . $origin);
-    header('Vary: Origin');
-    header('Access-Control-Allow-Headers: Content-Type');
-    header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
-}
-header('Content-Type: application/json; charset=utf-8');
-header('X-Content-Type-Options: nosniff');
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    if ($origin !== '' && !in_array($origin, $allowedOrigins, true)) {
-        http_response_code(403);
-        exit;
-    }
-    http_response_code(204);
-    exit;
-}
+header("Content-Type: application/json; charset=utf-8");
+header("Cache-Control: no-store");
+header("X-Content-Type-Options: nosniff");
+
+if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") { http_response_code(204); exit; }
+
 $cfg = require __DIR__ . '/../config/database.php';
 try {
     $dsn = "mysql:host={$cfg['host']};dbname={$cfg['database']};charset={$cfg['charset']}";
