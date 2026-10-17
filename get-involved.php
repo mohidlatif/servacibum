@@ -953,6 +953,7 @@ $submitted = isset($_GET['submitted']);
     <a href="./privacy.php">Privacy</a>
 </footer>
 
+<script src="/assets/page-end-nav.js?v=20261016a" defer></script>
 </body>
 
 </html>
