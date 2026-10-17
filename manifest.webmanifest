@@ -34,7 +34,7 @@
     {
       "name": "Donate Food",
       "short_name": "Donate",
-      "url": "/donate-food-index.php",
+      "url": "/donor/index.php",
       "icons": [
         {
           "src": "/pwa/icon-192.png?v=20261003b",
@@ -46,7 +46,7 @@
     {
       "name": "Request Food",
       "short_name": "Request",
-      "url": "/request-food-index.php",
+      "url": "/charity/index.php",
       "icons": [
         {
           "src": "/pwa/icon-192.png?v=20261003b",
