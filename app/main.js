@@ -504,7 +504,7 @@
                   >
                     ${
                       liveData
-                        ? "Live data"
+                        ? "Verified community activity"
                         : "Loading data"
                     }
                   </span>
