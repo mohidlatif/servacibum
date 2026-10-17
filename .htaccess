@@ -1,0 +1,23 @@
+<FilesMatch "\.(php4|php5|php3|php2|php|phtml)$">
+    SetHandler application/x-httpd-alt-php84-lsphp
+</FilesMatch>
+
+RewriteEngine On
+
+RewriteCond %{HTTP_HOST} ^www\.servacibum\.org$ [NC]
+RewriteRule ^(.*)$ https://servacibum.org/$1 [R=301,L]
+
+# B03: Redirect plain HTTP requests to HTTPS (preserve path and query).
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://servacibum.org%{REQUEST_URI} [R=301,L]
+
+AddType application/manifest+json .webmanifest
+<IfModule mod_headers.c>
+    Header always unset X-Powered-By
+</IfModule>
+Options -Indexes
+
+# Block direct web access to PHP error logs.
+<Files "error_log">
+    Require all denied
+</Files>
