@@ -84,6 +84,14 @@ The production platform provides a dedicated experience for each role:
 | **Volunteer** | Once approved, can be assigned to or self-claim eligible deliveries |
 | **Administrator** | Reviews applications and requests, approves matches, and coordinates deliveries |
 
+### Food donor and charity verification (pilot policy)
+
+Food donors and charities may submit an initial application through **Get Involved**. Submission does **not** create an authorized portal account or grant access to food-rescue operations. Applications remain pending while a ServaCibum administrator reviews them.
+
+**Before approval**, the administrator contacts the applicant privately by email to request appropriate evidence of business or organizational registration and the relevant registration number or equivalent identifier. The administrator checks the organization and the applicant's authority to represent it, using independently available records or contact details where possible. The administrator then approves or rejects the application; approved partners use a one-time activation link to set up portal access.
+
+**Registration documents and registration numbers are not requested or uploaded through the public website.** They are handled separately and should not be copied into public pages, GitHub, or unnecessary application notes. This is a manual verification policy, not an automated check of submitted evidence.
+
 ---
 
 ## Design Principles
