@@ -233,5 +233,6 @@
   &middot; <a href="./privacy.php">Privacy</a>
 </footer>
 </main>
+<script src="/assets/page-end-nav.js?v=20261016a" defer></script>
 </body>
 </html>
