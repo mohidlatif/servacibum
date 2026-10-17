@@ -13,7 +13,7 @@
     const back = document.createElement("a");
     back.href = "/";
     back.textContent = "← Back to Previous Page";
-    back.style.cssText = "color:#123f2b;text-decoration:underline;text-underline-offset:3px;";
+    back.style.cssText = "color:#123f2b;text-decoration:none;";
     back.addEventListener("click", function (event) {
       // Use history only when a same-origin previous page can be verified.
       let sameSitePreviousPage = false;
@@ -32,7 +32,7 @@
     const top = document.createElement("a");
     top.href = "#";
     top.textContent = "↑ Back to Top";
-    top.style.cssText = "color:#123f2b;text-decoration:underline;text-underline-offset:3px;";
+    top.style.cssText = "color:#123f2b;text-decoration:none;";
     top.addEventListener("click", function (event) {
       event.preventDefault();
       window.scrollTo({
