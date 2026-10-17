@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="ServaCibum Terms of Use for visitors, food donors, charities and volunteers using the ServaCibum community food-rescue platform.">
-  <title>Terms of Use ¡¤ ServaCibum</title>
+  <title>Terms of Use | ServaCibum</title>
   <link rel="stylesheet" href="./assets/site.css?v=20261003-terms2">
 
   <style>
