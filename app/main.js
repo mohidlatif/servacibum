@@ -20,7 +20,10 @@
     "Donate Food",
     "Request Food",
     "Map",
-    "Volunteer Network"
+    "Volunteer Network",
+    "About Us",
+    "Terms of Use",
+    "Privacy"
   ];
 
   const donorImages = [
@@ -681,6 +684,7 @@
                     data-page="${
                       escapeHtml(name)
                     }"
+                    ${name === "About Us" ? 'data-about-us-link="built-in"' : name === "Terms of Use" ? 'data-terms-link="built-in"' : name === "Privacy" ? 'data-privacy-link="built-in"' : ""}
                   >
                     ${escapeHtml(name)}
                   </button>
@@ -728,6 +732,7 @@
                       data-page="${
                         escapeHtml(name)
                       }"
+                    ${name === "About Us" ? 'data-about-us-link="built-in"' : name === "Terms of Use" ? 'data-terms-link="built-in"' : name === "Privacy" ? 'data-privacy-link="built-in"' : ""}
                     >
                       ${escapeHtml(name)}
                     </button>
@@ -834,6 +839,17 @@
 
               return;
             }
+
+            const publicPages = {
+              "About Us": "./about-us.php",
+              "Terms of Use": "./terms-of-use.php",
+              "Privacy": "./privacy.php"
+            };
+            if (Object.prototype.hasOwnProperty.call(publicPages, page)) {
+              window.location.href = publicPages[page];
+              return;
+            }
+
 
             showPage(page);
           }
