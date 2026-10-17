@@ -12,23 +12,8 @@
 
     const back = document.createElement("a");
     back.href = "/";
-    back.textContent = "← Back to Previous Page";
+    back.textContent = "← Back to ServaCibum Home";
     back.style.cssText = "color:#123f2b;text-decoration:none;";
-    back.addEventListener("click", function (event) {
-      // Use history only when a same-origin previous page can be verified.
-      let sameSitePreviousPage = false;
-      try {
-        sameSitePreviousPage = !!document.referrer &&
-          new URL(document.referrer).origin === window.location.origin;
-      } catch (_) {}
-
-      if (sameSitePreviousPage && window.history.length > 1) {
-        event.preventDefault();
-        window.history.back();
-      }
-      // Otherwise the link goes to the homepage.
-    });
-
     const top = document.createElement("a");
     top.href = "#";
     top.textContent = "↑ Back to Top";
