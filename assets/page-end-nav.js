@@ -1,30 +1,57 @@
-/* ServaCibum public-page end navigation. */
+/* Simple end-of-page links for public ServaCibum pages. */
 (function () {
   "use strict";
+
   function initialize() {
     if (document.getElementById("servacibum-page-end-nav")) return;
-    var container = document.createElement("nav");
-    container.id = "servacibum-page-end-nav";
-    container.setAttribute("aria-label", "End of page navigation");
-    container.style.cssText = "display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;max-width:1100px;margin:28px auto 24px;padding:16px;box-sizing:border-box;";
-    var home = document.createElement("a");
-    home.href = "/";
-    home.textContent = "← ServaCibum Home";
-    home.style.cssText = "display:inline-flex;justify-content:center;align-items:center;min-height:44px;padding:10px 18px;border-radius:10px;background:#123f2b;color:#fff;text-decoration:none;font:700 15px/1.3 system-ui,sans-serif;";
-    var top = document.createElement("button");
-    top.type = "button";
-    top.textContent = "↑ Back to Top";
-    top.setAttribute("aria-label", "Back to top of page");
-    top.style.cssText = "display:inline-flex;justify-content:center;align-items:center;min-height:44px;padding:10px 18px;border:1px solid #123f2b;border-radius:10px;background:#fff;color:#123f2b;cursor:pointer;font:700 15px/1.3 system-ui,sans-serif;";
-    top.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+
+    const nav = document.createElement("nav");
+    nav.id = "servacibum-page-end-nav";
+    nav.setAttribute("aria-label", "Page navigation");
+    nav.style.cssText = "display:flex;flex-wrap:wrap;justify-content:center;gap:20px;margin:24px auto;padding:12px 16px;text-align:center;font:500 14px/1.5 system-ui,sans-serif;";
+
+    const back = document.createElement("a");
+    back.href = "/";
+    back.textContent = "← Back to Previous Page";
+    back.style.cssText = "color:#123f2b;text-decoration:underline;text-underline-offset:3px;";
+    back.addEventListener("click", function (event) {
+      // Use history only when a same-origin previous page can be verified.
+      let sameSitePreviousPage = false;
+      try {
+        sameSitePreviousPage = !!document.referrer &&
+          new URL(document.referrer).origin === window.location.origin;
+      } catch (_) {}
+
+      if (sameSitePreviousPage && window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+      // Otherwise the link goes to the homepage.
     });
-    container.appendChild(home);
-    container.appendChild(top);
-    var footer = document.querySelector("footer:last-of-type");
-    if (footer && footer.parentNode) footer.parentNode.insertBefore(container, footer);
-    else document.body.appendChild(container);
+
+    const top = document.createElement("a");
+    top.href = "#";
+    top.textContent = "↑ Back to Top";
+    top.style.cssText = "color:#123f2b;text-decoration:underline;text-underline-offset:3px;";
+    top.addEventListener("click", function (event) {
+      event.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto" : "smooth"
+      });
+    });
+
+    nav.appendChild(back);
+    nav.appendChild(top);
+    const footer = document.querySelector("footer:last-of-type");
+    if (footer && footer.parentNode) footer.parentNode.insertBefore(nav, footer);
+    else document.body.appendChild(nav);
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialize);
-  else initialize();
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize);
+  } else {
+    initialize();
+  }
 })();
